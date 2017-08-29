@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>计算属性</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>计算属性</h1>
+      <p>original message: {{ message }}</p>
+      <p>computed reversed message: {{ reversedMessage }} </p>
+      <!-- 插值表达式里面也可以使用单引号字符串来和变量一块用 -->
+      <p>{{'fullName: ' + fullName}}</p>
+      <p>{{now}}</p>
+      <p>{{now2}}</p>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          firstName: 'james',
+          lastName: 'jordan',
+          date: new Date()
+        },
+        // 计算属性的用法和普通属性的用法一致，并且计算属性依赖的普通属性更新时，计算属性也会自动更新，这个函数没有副作用，计算属性相较于methods的优点是，计算属性有缓存，计算属性不必像函数那样每次都去执行，计算属性也可以很好替代watch
+        computed: {
+          reversedMessage: function(){
+            return this.message.split('').reverse().join('')
+          },
+          fullName: function(){
+            return this.firstName + ' ' + this.lastName
+          },
+          // 下面的计算属性是不会动态更新的，因为Date.now()都不是响应式依赖
+          now: function () {
+            return Date.now()
+          },
+          now2: function () {
+            return this.date.toLocaleString()
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

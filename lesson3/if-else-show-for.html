@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>条件渲染</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>条件渲染</h1>
+
+      <p v-if="ok">date.ok == true</p>
+      <p v-else>else content</p>
+      <p v-if="no">date.no == true</p>
+      <p v-else>date.no == false</p>
+      <!-- 渲染一组元素,并且不渲染包裹元素的模板 -->
+      <template v-if="ok">
+        <p>zhangsan</p>
+        <p>lisi</p>
+        <p>wangmazi</p>
+      </template>
+
+      <!-- v-show和v-if的区别，频繁切换用v-show,否则用v-if -->
+      <p v-show="ok">date.ok == true</p>
+      <p v-show="no">date.no == true</p>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          ok: true,
+          no: false
+        }
+      })
+    </script>
+  </body>
+</html>

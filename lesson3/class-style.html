@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>lesson1</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- v-bind:class 也可以用在组件上，用在组件上时，将会被绑定在组件的根元素上，并且不会覆盖已经存在的类 -->
+      <span class="class1" v-bind:class="{active: isActive}">检查元素查看我的类样式</span>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          isActive: true
+        }
+      })
+    </script>
+  </body>
+</html>

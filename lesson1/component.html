@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>vue-component</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ol>
+        <!-- 默认这中绑定指令双引号里面应该是js表达式，所以如果是传值，可以再加上一个单引号 -->
+        <todo-item v-bind:todo="'zhangsan'"></todo-item>
+        <todo-item v-bind:todo="'lisi'"></todo-item>
+        <!-- 子组件可以通过接受props实现了和父组件的解耦 -->
+        <todo-item
+          v-for="todo in todos"
+          v-bind:todo="todo.text">
+        </todo-item>
+      </ol>
+    </div>
+    <script type="text/javascript">
+      // vue 组件稍微有点类似自定义元素
+      Vue.component('todo-item',{
+        props: ['todo'],
+        template: '<li>{{todo}}</li>'
+      })
+
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          todos: [
+            {text: 'eat'},
+            {text: 'sleep'},
+            {text: 'punch doudou'}
+          ]
+        }
+      })
+    </script>
+  </body>
+</html>

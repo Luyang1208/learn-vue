@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>lesson1</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="">
+        {{ message }}
+      </div>
+      <input v-model="inputMessage">
+      <my-component v-bind:my-message="inputMessage"></my-component>
+      <!-- 传递的是字符串“1”，现在是字面量语法 -->
+      <my-component my-message="1"></my-component>
+      <!-- 传递是数字1，现在是动态语法，这样传递的 1 会被当做JavaScript表达式计算 -->
+      <my-component v-bind:my-message="1"></my-component>
+      <my-second-component></my-second-component>
+      <!-- 组件也可以使用is，属性调用，官方demo说的是组件在table这样的标签下会有限制，但是此处可以工作，不知道为什么 -->
+      <table>
+        <my-second-component></my-second-component>
+        <tr is="my-second-component">
+        </tr>
+      </table>
+      <!-- 组件在一些标签中渲染有问题，即使使用is属性调用也会有问题 -->
+      <select class="" name="select">
+        <option value ="volvo">Volvo</option>
+        <option value="使用is在select标签中" is="my-second-component">使用is在select标签中</option>
+      </select>
+      <!-- 标准select对照组 -->
+      <select>
+        <option value ="volvo">Volvo</option>
+        <option value ="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+      </select>
+    </div>
+    <script type="text/javascript">
+      // 全局注册组件component要在vue实例之前注册，在之后注册的话报错,组件中的data必须是个函数，至于为什么，现在还没有看的很明白
+      // props是父组件传递过来的数据，一般用message来接受，如果props的命名规范是驼峰命名，在html中传参要使用要转成短线隔开的形式。这是因为html不支持大小写。如果要让props实现双向绑定的功能，在向组件传入参数时，使用v-bind绑定数据就可以实现
+      // 子组件不能修改props，这样会产生警告。父组件如果产生数据的更新，会同步数据到子组件
+      // 组件可以进行数据校验，可以为自定义的组件指定需求的数据格式
+      Vue.component('my-component', {
+        template: '<div v-bind:title="myMessage"><p>{{myMessage}}</p> <button v-on:click="counter += 1">{{counter}}</button></div>',
+        props: ['myMessage'],
+        data: function(){
+          return {
+            counter: 0
+          }
+        }
+      })
+      // 在事例中注册组件，作用域限制在组件内部调用
+      var myComponent = {
+        template: '<div>my second component</div>'
+      }
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          inputMessage: 'init input'
+        },
+        components: {
+          'my-second-component': myComponent
+        }
+      })
+
+    </script>
+  </body>
+</html>

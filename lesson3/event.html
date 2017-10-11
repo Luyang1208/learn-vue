@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>lesson1</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{count}}</p>
+      <p v-bind:title="count">鼠标悬浮查看</p>
+      <button class="" v-on:click="count += 1">点击+1</button>
+      <button class="" v-on:click="greet">点击问好</button>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'zhangsan',
+          count: 1
+        },
+        // methods中可以定义方法
+        methods: {
+          // 参数event可以获得原生的dom方法
+          greet: function(event){
+            alert('hello,world');
+            if(event){
+              alert(event.target.tagName);
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
